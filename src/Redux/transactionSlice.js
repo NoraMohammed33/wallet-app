@@ -15,11 +15,25 @@ let transactionSlice = createSlice({
             state.transactions.push(actions.payload)
             localStorage.setItem('transactions', JSON.stringify(state.transactions))
         },
-        // getTransactions: () => {
-        //     localStorage.getItem('transactions')
-        // }
+        updateTransactions: (state, actions) => {
+            state.transactions.forEach((transaction, index) => {
+                if (transaction.date === actions.payload.date) {
+                        state.transactions.splice(index,1)
+                    }
+            });
+            localStorage.setItem('transactions', JSON.stringify(state.transactions))
+            let balance = localStorage.getItem('currentBalance')
+            if (actions.payload.type === 'deposit') {
+                balance -= actions.payload.amount
+                localStorage.setItem('currentBalance',balance)
+            }
+            else {
+                balance += actions.payload.amount
+                localStorage.setItem('currentBalance',balance)
+            }
+        }
     }
 });
 
 export let transactionReducer = transactionSlice.reducer;
-export let {setTransaction} = transactionSlice.actions; 
+export let {setTransaction,updateTransactions} = transactionSlice.actions; 

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import Styles from "./Withdraw.module.css"
-import { useDispatch} from 'react-redux';
-import { setTransaction } from "../../Redux/transactionSlice"
+import { useDispatch, useSelector } from 'react-redux';
+import { setTransaction, updateTransactions } from "../../Redux/transactionSlice"
 
-export default function Withdraw({onClose }) {
+export default function Withdraw({ onClose }) {
 
     const [withdrawInput, setWithdrawInput] = useState(0);
     const [disabledInput, setDisabledInput] = useState(false);
     const dispatch = useDispatch();
+    const { transactions } = useSelector((state) => state.transactions)
+    const currentTime = new Date().getTime();
 
     const handleDisabled = (e) => {
         console.log(localStorage.getItem('currentBalance'))
@@ -26,7 +28,7 @@ export default function Withdraw({onClose }) {
             if (amount <= localStorage.getItem('currentBalance')) {
                 let newBalance = storedBalance - amount
                 setWithdrawInput(0);
-                
+
                 const newTransaction = {
                     date: new Date().toLocaleString(),
                     type: 'Withdraw',
@@ -39,12 +41,39 @@ export default function Withdraw({onClose }) {
             }
         }
     }
+    const recentTransactions = transactions.filter(transaction => {
+        const transactionTime = new Date(transaction.date).getTime();
+        const timeDifference = currentTime - transactionTime;
+        return timeDifference >= 0 && timeDifference <= 5 * 60 * 1000; // Within 5 minutes
+    })
+
     return (
         <>
-            <div className={Styles.popup}>
-                <input className="form-control mb-3" value={withdrawInput} onChange={(e) => { setWithdrawInput(e.target.value); handleDisabled(e.target.value) }} />
-                <button className="btn btn-success mx-2" onClick={() => { handleWithdraw(); onClose(); }} disabled={disabledInput}>Withdraw</button>
-                <button className="btn btn-danger" onClick={onClose}>Close Popup</button>
+            <div className={`${Styles.popup} row w-75 justify-content-between text-center`}>
+                <div className="col-lg-3">
+                    <input className="form-control my-5 mb-3" value={withdrawInput} onChange={(e) => { setWithdrawInput(e.target.value); handleDisabled(e.target.value) }} />
+                    <button className="btn btn-success mx-2" onClick={() => { handleWithdraw();}} disabled={disabledInput}>Withdraw</button>
+                    <button className="btn btn-danger" onClick={onClose}>Close </button>
+                </div>
+                {(recentTransactions.length ? true : false) && (
+                    <div className="col-lg-6 ">
+                        <div className="row justify-content-between">
+                            <h5 className='col-lg-3'>Undo</h5>
+                            <h5 className='col-lg-3'>Amount</h5>
+                            <h5 className='col-lg-3'>type</h5>
+                        </div>
+                        <div >
+                            {recentTransactions.map((transaction, index) => (
+                                <div className="row justify-content-between align-aitems-center" key={index}>
+                                    <div className="col-lg-3"><button className='btn btn-danger' onClick={() => dispatch(updateTransactions(transaction))}>undo</button></div>
+                                    <p className='col-lg-3'>{transaction.amount}</p>
+                                    <p className='col-lg-3'>{transaction.type}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>
+                )}
             </div>
         </>
     );

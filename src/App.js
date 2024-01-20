@@ -8,9 +8,9 @@ import Transactions from './components/Transactions/Transactions';
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className="">
         <Wallet />
-        <Transactions/>
+        {/* <Transactions/> */}
       </div>
     </Provider>
   );
