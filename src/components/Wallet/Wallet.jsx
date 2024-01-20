@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Styles from './Wallet.module.css'
+// import Styles from './Wallet.module.css'
 import CurrentBalance from "../CurrentBalance/CurrentBalance";
 import Deposit from "../Deposit/Deposit";
 import Withdraw from "../Withdraw/Withdraw";
@@ -9,6 +9,7 @@ export default function Wallet() {
     const [balancePopup, setBalancePopup] = useState(false);
     const [depositPopupOpen, setDepositPopupOpen] = useState(false);
     const [withdrawPopupOpen, setWithdrawPopupOpen] = useState(false);
+
 
     const balanceButtonClick = () => {
         setBalancePopup(true);

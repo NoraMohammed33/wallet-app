@@ -1,12 +1,18 @@
+import { Provider } from 'react-redux';
 import './App.css';
 import Wallet from './components/Wallet/Wallet';
+import store from './Redux/Store';
+import Transactions from './components/Transactions/Transactions';
 
 
 function App() {
   return (
-    <div className="App">
-      <Wallet/>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Wallet />
+        <Transactions/>
+      </div>
+    </Provider>
   );
 }
 
