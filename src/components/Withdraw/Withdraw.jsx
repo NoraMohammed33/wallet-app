@@ -12,12 +12,11 @@ export default function Withdraw({ onClose }) {
     const currentTime = new Date().getTime();
 
     const handleDisabled = (e) => {
-        console.log(localStorage.getItem('currentBalance'))
-        if (parseFloat(e) < parseFloat(localStorage.getItem('currentBalance'))) {
-            setDisabledInput(false);
+        if (parseFloat(e) > parseFloat(localStorage.getItem('currentBalance'))) {
+            setDisabledInput(true);
         }
         else {
-            setDisabledInput(true);
+            setDisabledInput(false);
         }
     }
     const handleWithdraw = () => {
@@ -49,11 +48,10 @@ export default function Withdraw({ onClose }) {
 
     return (
         <>
-            <div className={`${Styles.popup} row w-75 justify-content-between text-center`}>
+            <div className={`${Styles.popup} row w-75 justify-content-between text-center m-auto mt-5`}>
                 <div className="col-lg-3">
                     <input className="form-control my-5 mb-3" value={withdrawInput} onChange={(e) => { setWithdrawInput(e.target.value); handleDisabled(e.target.value) }} />
                     <button className="btn btn-success mx-2" onClick={() => { handleWithdraw();}} disabled={disabledInput}>Withdraw</button>
-                    <button className="btn btn-danger" onClick={onClose}>Close </button>
                 </div>
                 {(recentTransactions.length ? true : false) && (
                     <div className="col-lg-6 ">

@@ -1,33 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Styles from "./Deposit.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransaction, updateTransactions } from "../../Redux/transactionSlice"
+import Gamification from '../Gamification/Gamification';
 
-export default function Deposit({ onClose }) {
+export default function Deposit() {
 
     const [depositInput, setDepositInput] = useState(0);
     const dispatch = useDispatch();
     const { transactions } = useSelector((state) => state.transactions)
+    const [gam, setGam] = useState(false);
+    const [bons, setBons] = useState(false);
     const currentTime = new Date().getTime();
+    // let gam = false;
+    // let bons;
 
     const addFunds = () => {
-        console.log(recentTransactions)
         const storedBalance = parseFloat(localStorage.getItem('currentBalance')) || 0;
         let amount = parseFloat(depositInput);
         if (amount) {
             let newBalance = storedBalance + amount
-            let bons;
             if (amount >= 100 && amount < 500) {
-                bons = 5;
+                setBons(5);
                 newBalance += bons;
+                setGam(true)
             }
             else if (amount >= 500 && amount < 1000) {
-                bons = 20;
+                setBons(20);
                 newBalance += bons;
+                setGam(true)
             }
             else if (amount >= 1000) {
-                bons = 50;
+                setBons(50);
                 newBalance += bons;
+                setGam(true)
             }
             setDepositInput(0);
 
@@ -42,6 +48,7 @@ export default function Deposit({ onClose }) {
             localStorage.setItem('currentBalance', newBalance);
 
         }
+        console.log(gam)
 
     }
     const recentTransactions = transactions.filter(transaction => {
@@ -50,20 +57,28 @@ export default function Deposit({ onClose }) {
         return timeDifference >= 0 && timeDifference <= 5 * 60 * 1000; // Within 5 minutes
     });
 
+    const handleClosePopup = () => {
+        setGam(false)
+    };
+    useEffect(() => {
+        // console.log(bons)
+    })
+
     return (
         <>
-            <div className={`${Styles.popup} row w-75 justify-content-between text-center`}>
+            {gam && (<Gamification bons={bons} onClose={handleClosePopup} />)}
+            
+            <div className={`${Styles.popup} row w-75 justify-content-between  m-auto mt-5`}>
                 <div className="col-lg-3">
-                    <input className="form-control my-5 mb-3" value={depositInput} onChange={(e) => setDepositInput(e.target.value)} placeholder='enter here' />
-                    <button className="btn btn-success mx-2" onClick={() => { addFunds(); onClose(); }}>Deposit</button>
-                    <button className="btn btn-danger" onClick={onClose}>Close</button>
+                    <input className="form-control my-5 mb-3"  onChange={(e) => setDepositInput(e.target.value)} placeholder='enter here' />
+                    <button className="btn btn-success mx-2" onClick={() => { addFunds(); }}>Deposit</button>
                 </div>
                 {(recentTransactions.length?true:false) && (
-                    <div className="col-lg-6 ">
-                        <div className="row justify-content-between">
+                    <div className="col-lg-6 text-center">
+                        <div className="row justify-content-between align-aitems-baselign">
                             <h5 className='col-lg-3'>Undo</h5>
                             <h5 className='col-lg-3'>Amount</h5>
-                            <h5 className='col-lg-3'>type</h5>
+                            <h5 className='col-lg-3'>Recent Trans</h5>
                         </div>
                         <div >
                             {recentTransactions.map((transaction, index) => (
@@ -74,7 +89,6 @@ export default function Deposit({ onClose }) {
                                 </div>
                             ))}
                         </div>
-
                     </div>
                 )}
             </div>

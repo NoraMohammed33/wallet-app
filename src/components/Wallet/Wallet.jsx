@@ -1,48 +1,45 @@
 import React, { useState, useEffect } from "react";
-// import Styles from './Wallet.module.css'
-import CurrentBalance from "../CurrentBalance/CurrentBalance";
-import Deposit from "../Deposit/Deposit";
-import Withdraw from "../Withdraw/Withdraw";
+import Styles from './Wallet.module.css'
+import MainSlider from "../../Layouts/MainSlider/MainSlider";
+import { NavLink } from "react-router-dom";
 
 export default function Wallet() {
 
-    const [balancePopup, setBalancePopup] = useState(false);
-    const [depositPopupOpen, setDepositPopupOpen] = useState(false);
-    const [withdrawPopupOpen, setWithdrawPopupOpen] = useState(false);
+    const [currentBalance, setcurrentBalance] = useState(0);
 
-
-    const balanceButtonClick = () => {
-        setBalancePopup(true);
-    };
-    const DepositButtonClick = () => {
-        setDepositPopupOpen(true);
-    };
-    const withdrawButtonClick = () => {
-        setWithdrawPopupOpen(true);
-    };
-    const handleClosePopup = () => {
-        setBalancePopup(false);
-        setDepositPopupOpen(false);
-        setWithdrawPopupOpen(false);
-    };
+    useEffect(() => {
+        const storedBalance = parseFloat(localStorage.getItem('currentBalance')) || 0;
+        setcurrentBalance(storedBalance)
+    }, [setcurrentBalance])
 
     return (
         <>
-            <div className="container">
+            <MainSlider />
+            <div className="row text-center justify-content-center ">
+                <h2 className=" mt-3">Our Servies</h2>
 
-                <div className="currentBalance mt-3">
-                    <button className="btn btn-primary" onClick={balanceButtonClick}>Current balance inquiry</button>
-                    {balancePopup && <CurrentBalance onClose={handleClosePopup} />}
+                <div className="col-3 mt-3">
+                    <div className={`card ${Styles.card}`}>
+                        <div className="card-body">
+                            <h5 className="card-title">Balance <span className="text-success"> {currentBalance}</span></h5>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="deposit my-3">
-                    <button className="btn btn-primary" onClick={DepositButtonClick}>Deposit</button>
-                    {depositPopupOpen && <Deposit onClose={handleClosePopup} />}
+                <div className="col-3 my-3">
+                    <NavLink to="/deposit" className="text-decoration-none">
+                        <div className={`card ${Styles.card}`}>
+                            <h5 className="card-body">Deposit</h5>
+                        </div>
+                    </NavLink>
                 </div>
 
-                <div className="withdrawm my-3">
-                    <button className="btn btn-primary" onClick={withdrawButtonClick}>Withdraw</button>
-                    {withdrawPopupOpen && <Withdraw onClose={handleClosePopup} />}
+                <div className="col-3 my-3">
+                    <NavLink to="/withdraw" className="text-decoration-none">
+                        <div className={`card ${Styles.card}`}>
+                            <h5 className="card-body">Withdraw</h5>
+                        </div>
+                    </NavLink>
                 </div>
 
             </div>

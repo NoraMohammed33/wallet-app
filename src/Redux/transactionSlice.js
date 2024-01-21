@@ -22,13 +22,13 @@ let transactionSlice = createSlice({
                     }
             });
             localStorage.setItem('transactions', JSON.stringify(state.transactions))
-            let balance = localStorage.getItem('currentBalance')
+            let balance = parseFloat(localStorage.getItem('currentBalance'))
             if (actions.payload.type === 'deposit') {
                 balance -= actions.payload.amount
                 localStorage.setItem('currentBalance',balance)
             }
             else {
-                balance += actions.payload.amount
+                balance += parseFloat(actions.payload.amount)
                 localStorage.setItem('currentBalance',balance)
             }
         }
