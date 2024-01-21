@@ -22,17 +22,17 @@ export default function Deposit() {
             let newBalance = storedBalance + amount
             if (amount >= 100 && amount < 500) {
                 setBons(5);
-                newBalance += bons;
+                newBalance += 5;
                 setGam(true)
             }
             else if (amount >= 500 && amount < 1000) {
                 setBons(20);
-                newBalance += bons;
+                newBalance += 20;
                 setGam(true)
             }
             else if (amount >= 1000) {
                 setBons(50);
-                newBalance += bons;
+                newBalance += 50;
                 setGam(true)
             }
             setDepositInput(0);
@@ -62,7 +62,7 @@ export default function Deposit() {
     };
     useEffect(() => {
         // console.log(bons)
-    })
+    },[setBons],[setGam])
 
     return (
         <>
@@ -70,6 +70,7 @@ export default function Deposit() {
             
             <div className={`${Styles.popup} row w-75 justify-content-between  m-auto mt-5`}>
                 <div className="col-lg-3">
+                    <p>{bons}</p>
                     <input className="form-control my-5 mb-3"  onChange={(e) => setDepositInput(e.target.value)} placeholder='enter here' />
                     <button className="btn btn-success mx-2" onClick={() => { addFunds(); }}>Deposit</button>
                 </div>
