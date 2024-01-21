@@ -13,18 +13,18 @@ export default function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <NavLink className="nav-link mx-3" to="/deposit">Deposit</NavLink>
+                                <NavLink className="nav-link mx-lg-3" to="/deposit">Deposit</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/withdraw">Withdraw</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link mx-3" to="/transactions">Transaction history</NavLink>
+                                <NavLink className="nav-link mx-lg-3" to="/transactions">Transaction history</NavLink>
                             </li>
                         </ul>
                         <form className="d-flex" role="search">
                             
-                                <i class="fa-solid fa-magnifying-glass mx-4"></i>
+                                <i class="fa-solid fa-magnifying-glass me-4"></i>
                                 <i class="fa-solid fa-user"></i>
                             {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                             <button className="btn btn-outline-success" type="submit">Search</button> */}

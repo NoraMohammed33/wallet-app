@@ -18,7 +18,7 @@ export default function Wallet() {
             <div className="row text-center justify-content-center ">
                 <h2 className=" mt-3">Our Servies</h2>
 
-                <div className="col-3 mt-3">
+                <div className="col-lg-3 mt-3">
                     <div className={`card ${Styles.card}`}>
                         <div className="card-body">
                             <h5 className="card-title">Balance <span className="text-success"> {currentBalance}</span></h5>
@@ -26,7 +26,7 @@ export default function Wallet() {
                     </div>
                 </div>
 
-                <div className="col-3 my-3">
+                <div className="col-lg-3 my-3">
                     <NavLink to="/deposit" className="text-decoration-none">
                         <div className={`card ${Styles.card}`}>
                             <h5 className="card-body">Deposit</h5>
@@ -34,7 +34,7 @@ export default function Wallet() {
                     </NavLink>
                 </div>
 
-                <div className="col-3 my-3">
+                <div className="col-lg-3 my-3">
                     <NavLink to="/withdraw" className="text-decoration-none">
                         <div className={`card ${Styles.card}`}>
                             <h5 className="card-body">Withdraw</h5>

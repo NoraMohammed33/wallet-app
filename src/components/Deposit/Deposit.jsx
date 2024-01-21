@@ -77,16 +77,16 @@ export default function Deposit() {
                 {(recentTransactions.length?true:false) && (
                     <div className="col-lg-6 text-center">
                         <div className="row justify-content-between align-aitems-baselign">
-                            <h5 className='col-lg-3'>Undo</h5>
-                            <h5 className='col-lg-3'>Amount</h5>
-                            <h5 className='col-lg-3'>Recent Trans</h5>
+                            <h5 className='col-3'>Undo</h5>
+                            <h5 className='col-3'>Amount</h5>
+                            <h5 className='col-3'>Recent Trans</h5>
                         </div>
                         <div >
                             {recentTransactions.map((transaction, index) => (
                                 <div className="row justify-content-between align-aitems-center" key={index}>
-                                    <div className="col-lg-3"><button className='btn btn-danger' onClick={() => dispatch(updateTransactions(transaction))}>undo</button></div>
-                                    <p className='col-lg-3'>{transaction.amount}</p>
-                                    <p className='col-lg-3'>{transaction.type}</p>
+                                    <div className="col-3"><button className='btn btn-danger' onClick={() => dispatch(updateTransactions(transaction))}>undo</button></div>
+                                    <p className='col-3'>{transaction.amount}</p>
+                                    <p className='col-3'>{transaction.type}</p>
                                 </div>
                             ))}
                         </div>
