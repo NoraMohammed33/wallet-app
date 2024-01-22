@@ -18,7 +18,7 @@ function App() {
       { path: 'home', element: <Wallet /> },
       { path: 'deposit', element: <Deposit /> },
       { path: 'withdraw', element: <Withdraw /> },
-      { path: 'transactions', element: <Transactions/> },
+      { path: 'transactions', element: <Transactions /> },
     ]
   }])
   return (

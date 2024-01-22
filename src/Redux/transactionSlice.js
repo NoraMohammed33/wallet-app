@@ -24,6 +24,15 @@ let transactionSlice = createSlice({
             localStorage.setItem('transactions', JSON.stringify(state.transactions))
             let balance = parseFloat(localStorage.getItem('currentBalance'))
             if (actions.payload.type === 'deposit') {
+                if (actions.payload.amount >= 100 && actions.payload.amount < 500){
+                    balance -= 5;
+                }
+                else if (actions.payload.amount >= 500 && actions.payload.amount < 1000) {
+                    balance -= 20;
+                }
+                else if (actions.payload.amount >= 1000) {
+                    balance -= 50;
+                }
                 balance -= actions.payload.amount
                 localStorage.setItem('currentBalance',balance)
             }

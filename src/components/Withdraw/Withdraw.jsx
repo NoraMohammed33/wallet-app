@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Styles from "./Withdraw.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransaction, updateTransactions } from "../../Redux/transactionSlice"
+import Loading from '../Loading/Loading';
 
 export default function Withdraw({ onClose }) {
 
@@ -56,6 +57,7 @@ export default function Withdraw({ onClose }) {
                 {(recentTransactions.length ? true : false) && (
                     <div className="col-lg-6 ">
                         <div className="row justify-content-between">
+                            <h5 className="col-1"><i class="fa-solid fa-rotate-left"></i></h5>
                             <h5 className='col-3'>Undo</h5>
                             <h5 className='col-3'>Amount</h5>
                             <h5 className='col-3'>type</h5>
@@ -63,6 +65,7 @@ export default function Withdraw({ onClose }) {
                         <div >
                             {recentTransactions.map((transaction, index) => (
                                 <div className="row justify-content-between align-aitems-center" key={index}>
+                                    <div className="col-1"><Loading /></div>
                                     <div className="col-3"><button className='btn btn-danger' onClick={() => dispatch(updateTransactions(transaction))}>undo</button></div>
                                     <p className='col-3'>{transaction.amount}</p>
                                     <p className='col-3'>{transaction.type}</p>

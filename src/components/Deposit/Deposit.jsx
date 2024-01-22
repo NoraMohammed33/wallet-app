@@ -3,6 +3,7 @@ import Styles from "./Deposit.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransaction, updateTransactions } from "../../Redux/transactionSlice"
 import Gamification from '../Gamification/Gamification';
+import Loading from '../Loading/Loading';
 
 export default function Deposit() {
 
@@ -70,13 +71,13 @@ export default function Deposit() {
             
             <div className={`${Styles.popup} row w-75 justify-content-between  m-auto mt-5`}>
                 <div className="col-lg-3">
-                    <p>{bons}</p>
                     <input className="form-control my-5 mb-3"  onChange={(e) => setDepositInput(e.target.value)} placeholder='enter here' />
                     <button className="btn btn-success mx-2" onClick={() => { addFunds(); }}>Deposit</button>
                 </div>
                 {(recentTransactions.length?true:false) && (
                     <div className="col-lg-6 text-center">
                         <div className="row justify-content-between align-aitems-baselign">
+                            <h5 className="col-1"><i class="fa-solid fa-rotate-left"></i></h5>
                             <h5 className='col-3'>Undo</h5>
                             <h5 className='col-3'>Amount</h5>
                             <h5 className='col-3'>Recent Trans</h5>
@@ -84,6 +85,7 @@ export default function Deposit() {
                         <div >
                             {recentTransactions.map((transaction, index) => (
                                 <div className="row justify-content-between align-aitems-center" key={index}>
+                                    <div className="col-1"><Loading /></div>
                                     <div className="col-3"><button className='btn btn-danger' onClick={() => dispatch(updateTransactions(transaction))}>undo</button></div>
                                     <p className='col-3'>{transaction.amount}</p>
                                     <p className='col-3'>{transaction.type}</p>
